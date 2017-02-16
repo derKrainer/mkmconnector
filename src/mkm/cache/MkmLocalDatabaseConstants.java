@@ -1,0 +1,63 @@
+/**
+ * 
+ */
+package mkm.cache;
+
+/**
+ * Constants to use while operating on the database
+ *
+ * @author Kenny
+ * @since 29.12.2016
+ */
+interface MkmLocalDatabaseConstants
+{
+
+	String COL_PRODUCT_ID = "IDPRODUCT";
+
+	String COL_METAPRODUCT_ID = "IDMETAPRODUCT";
+
+	String COL_GAME_ID = "IDGAME";
+
+	String COL_COUNT_REPRINTS = "COUNT_REPRINTS";
+
+	String COL_NAME_ENGLISH = "NAME_ENGLISH";
+
+	String COL_NAME_FRENCH = "NAME_FRENCH";
+
+	String COL_NAME_GERMAN = "NAME_GERMAN";
+
+	String COL_NAME_SPANISH = "NAME_SPANISH";
+
+	String COL_NAME_ITALIAN = "NAME_ITALIAN";
+
+	String COL_WEBSITE = "WEBSITE";
+
+	String COL_IMAGE_URL = "IMAGE_URL";
+
+	String COL_CATEGORY_ID = "CATEGORY_ID";
+
+	String COL_PRICE_SELL = "PRICE_SELL";
+
+	String COL_PRICE_LOW = "PRICE_LOW";
+
+	String COL_PRICE_LOWEX = "PRICE_LOWEX";
+
+	String COL_PRICE_LOWFOIL = "PRICE_LOWFOIL";
+
+	String COL_PRICE_AVG = "PRICE_AVG";
+
+	String COL_PRICE_TREND = "PRICE_TREND";
+
+	String COL_EXPANSION = "EXPANSION";
+
+	String COL_EXPANSION_ICON = "EXPANSION_ICON";
+
+	String COL_COLLECTORS_NUMBER = "COLLECTORS_NUMBER";
+
+	String COL_RARITY = "RARITY";
+
+	String COL_CREATED_AT = "CREATED_AT";
+
+	String COL_UPDATED_AT = "UPDATED_AT";
+
+}

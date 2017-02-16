@@ -1,0 +1,24 @@
+################## only before the first run ##################
+
+1.1.) open install_cert.bat with a text editor
+	- replace the value of JAVA_ROOT (default C:/Program Files/Java/jre1.8.0_66) with your java installation folder.
+	 (replace all \ with / ). If have multiple java versions installed, juse the command java -version in the command line
+	 to show the used one
+
+1.2.) run install_cert,bat with ADMIN rights
+
+1.3.) open mkmConnector.jar with a zip programm
+	- edit mkmConnector.properties with a text editor (inside the jar file)
+	- replace the first 4 entries with your mkm information (mkm_app_token, mkm_app_secret, mkm_access_token, mkm_access_token_secret)
+
+##################     do this for every run 	##################
+################## end of first install routine ##################
+
+2.1.) optional - only if you want to switch the user to get the data for:
+	- open mkmExport.jar with a zip programm
+	- edit mkmConnector.properties with a text editor (inside the jar file)
+	- replace the entry mkmUserToExtractCollectionFor (default set to MrTumor) with the mkmUserName you want to fetch the data for
+
+2.2.) 
+	-	run start_export.bat to start the program to export the configured users collection to a csv file
+	-	run start_inserter.bat to start posting your product to mkm

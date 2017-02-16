@@ -1,0 +1,6 @@
+cache/response
+results/
+bin/
+.settings/
+/target/
+/mkmConnectorConfig.properties
