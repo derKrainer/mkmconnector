@@ -40,7 +40,7 @@ public class MkmExporter
 	public MkmExporter(final String user)
 	{
 		this.user = user;
-		this.con = new MkmConnector();
+		this.con = MkmConnector.getInstance();
 	}
 
 	public MkmExporter(final String user, final MkmConnector con)
@@ -79,14 +79,6 @@ public class MkmExporter
 					retVal = new File(fileName.toString());
 				}
 			}
-
-			// }
-			// else
-			// {
-			// LoggingHelper.printInfo(LogLevel.Info, "retrieved :", xml);
-			// }
-			//
-			// }
 		}
 		catch (Exception ex)
 		{

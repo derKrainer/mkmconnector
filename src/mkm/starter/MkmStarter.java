@@ -4,6 +4,7 @@
 package mkm.starter;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import mkm.cache.builder.MkmCacheBuilder;
 import mkm.config.MkmConfig;
@@ -15,6 +16,7 @@ import mkm.exporter.MkmExporter;
 import mkm.inserter.MkmInserter;
 import mkm.inserter.gui.MkmInserterMain;
 import mkm.install.ConfigureCertInstaller;
+import mkm.localization.Localization;
 import mkm.log.LogLevel;
 import mkm.log.LoggingHelper;
 import mkm.manager.gui.MkmManager;
@@ -39,12 +41,14 @@ public class MkmStarter
 		if (checkPrequesites())
 		{
 
-			String[] params = args;
-
-			if (params == null || params.length == 0)
+			// if no arguments, show GUI
+			if (args == null || args.length == 0)
 			{
-				params = new String[] { "-verbouse", "-startInserter" };
+				new ApplicationChooser();
+				return;
 			}
+
+			String[] params = args;
 
 			boolean verbouse = false;
 			boolean startInserter = false, startExporter = false, startCacheBuider = false, startManager = false, updateInstaller = false;
@@ -91,12 +95,10 @@ public class MkmStarter
 			if (updateInstaller)
 			{
 				updateCertFile();
-			}
 
-			//
-			MkmConnector c = new MkmConnector();
-			// MkmServiceHandler handler = new MkmServiceHandler(c);
-			// handler.performNameSearch("Island", Language.English, true, null);
+				System.out.println(Localization.getLocalizedString("Updated certifican installer, please run install_cert_modified.bat in ADMIN mode."));
+				System.exit(0);
+			}
 
 			if (startManager)
 			{
@@ -107,7 +109,7 @@ public class MkmStarter
 
 				try
 				{
-					new MkmManager(startManager, startInserter, c);
+					new MkmManager(startManager, startInserter, MkmConnector.getInstance());
 				}
 				catch (EmptyResponseException e)
 				{
@@ -127,7 +129,7 @@ public class MkmStarter
 			}
 			else if (startInserter)
 			{
-				startInserter(verbouse, c);
+				startInserter(verbouse, MkmConnector.getInstance());
 			}
 
 			if (startExporter)
@@ -149,8 +151,7 @@ public class MkmStarter
 
 	public static void startCacheBuilder(final boolean verbouse)
 	{
-		MkmConnector con = new MkmConnector();
-		new MkmCacheBuilder(con, 500).buildCardCache(verbouse);
+		new MkmCacheBuilder(MkmConnector.getInstance(), 500).buildCardCache(verbouse);
 	}
 
 	public static void startInserter(final boolean verbouse, final MkmConnector con)
@@ -163,7 +164,6 @@ public class MkmStarter
 		try
 		{
 			ConfigureCertInstaller.udpateInstallFile();
-			return;
 		}
 		catch (IOException e)
 		{
@@ -183,10 +183,30 @@ public class MkmStarter
 		}
 		catch (MissingConfigException ex)
 		{
-			System.err.println("Config missing. Please use Setup.");
+			LoggingHelper.logForLevel(LogLevel.Fatal, "Config missing. Please use Setup.");
 			return false;
 		}
 
-		return true;
+		boolean retVal = true;
+		ResourceBundle configBundle = ResourceBundle.getBundle("mkmConnector");
+		// check if all config keys have a value
+		for (String s : configBundle.keySet())
+		{
+			if (MkmConfig.getConfig(s) == null || "".equals(MkmConfig.getConfig(s)))
+			{
+				LoggingHelper.logForLevel(LogLevel.Fatal, "Please add a value for the following missing config: ", s);
+				retVal = false;
+			}
+		}
+
+		// check if mkmConnector has an instance
+		if (MkmConnector.getInstance() == null)
+		{
+			LoggingHelper.logForLevel(LogLevel.Fatal, "Unable to retrieve an instance of MkmConnnector");
+		}
+
+		// TODO: check mkm connnection for cert error
+
+		return retVal;
 	}
 }

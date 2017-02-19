@@ -27,6 +27,7 @@ import mkm.data.ProductPrice;
 import mkm.data.Rarity;
 import mkm.data.multilingual.Language;
 import mkm.data.multilingual.MultilingualName;
+import mkm.exception.SQLSetupException;
 import mkm.file.FileHelper;
 import mkm.log.LogLevel;
 import mkm.log.LoggingHelper;
@@ -66,13 +67,11 @@ public class MkmLocalDatabaseCache implements MkmLocalDatabaseConstants
 		}
 		catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SQLSetupException(e);
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new SQLSetupException(e);
 		}
 	}
 

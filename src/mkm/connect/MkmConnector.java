@@ -11,7 +11,6 @@ import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-import java.util.ResourceBundle;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -21,6 +20,7 @@ import javax.xml.bind.DatatypeConverter;
 import org.apache.http.HttpHeaders;
 
 import mkm.cache.MkmCache;
+import mkm.config.MkmConfig;
 import mkm.data.MtgCard;
 import mkm.exception.CertRefreshNeededException;
 import mkm.exception.Http400Exception;
@@ -37,9 +37,7 @@ public class MkmConnector
 {
 	public static final String VERSION = "0.2.0";
 
-	public static final ResourceBundle mkm_config = ResourceBundle.getBundle("mkmConnector");
-
-	public static final Boolean IS_SANDBOX_MODE = Boolean.parseBoolean(mkm_config.getString("useSandbox"));
+	public static final Boolean IS_SANDBOX_MODE = Boolean.parseBoolean(MkmConfig.getConfig("useSandbox"));
 
 	private static String[] mkmConfigKeys = new String[] { //
 			"mkm_app_token", "mkm_app_secret", "mkm_access_token", "mkm_access_token_secret", "mkm_base_url" };
@@ -53,25 +51,45 @@ public class MkmConnector
 
 	}
 
-	public static final String MKM_APP_TOKEN = mkm_config.getString(mkmConfigKeys[0]);
+	private static final MkmConnector instance = new MkmConnector();
 
-	public static final String MKM_APP_SECRET = mkm_config.getString(mkmConfigKeys[1]);
+	/**
+	 * Retrieves the global instance of the {@link MkmConnector}
+	 * 
+	 * @return an instance of {@link MkmConnector}
+	 */
+	public static MkmConnector getInstance()
+	{
+		return instance;
+	}
 
-	public static final String MKM_ACCESS_TOKEN = mkm_config.getString(mkmConfigKeys[2]);
+	/**
+	 * Hidden Constructor, use {@link #getInstance()}
+	 */
+	private MkmConnector()
+	{
+		// hidden, use getInstance
+	}
 
-	public static final String MKM_ACCESS_TOKEN_SECRET = mkm_config.getString(mkmConfigKeys[3]);
+	public static final String MKM_APP_TOKEN = MkmConfig.getConfig(mkmConfigKeys[0]);
 
-	public static final String BASE_URL = mkm_config.getString(mkmConfigKeys[4]);
+	public static final String MKM_APP_SECRET = MkmConfig.getConfig(mkmConfigKeys[1]);
 
-	public static final String OAUTH_VERSION = mkm_config.getString("oauth_version");
+	public static final String MKM_ACCESS_TOKEN = MkmConfig.getConfig(mkmConfigKeys[2]);
 
-	public static final String OAUTH_SIG_METHOD = mkm_config.getString("oauth_signature_method");
+	public static final String MKM_ACCESS_TOKEN_SECRET = MkmConfig.getConfig(mkmConfigKeys[3]);
 
-	public static final String RESPONSE_LOG_ROOT_DIR = mkm_config.getString("response_log_root");
+	public static final String BASE_URL = MkmConfig.getConfig(mkmConfigKeys[4]);
 
-	public static final String CACHE_ROOT_DIR = mkm_config.getString("cache_root");
+	public static final String OAUTH_VERSION = MkmConfig.getConfig("oauth_version");
 
-	public static final String OUTPUT_DIR = mkm_config.getString("output_dir");
+	public static final String OAUTH_SIG_METHOD = MkmConfig.getConfig("oauth_signature_method");
+
+	public static final String RESPONSE_LOG_ROOT_DIR = MkmConfig.getConfig("response_log_root");
+
+	public static final String CACHE_ROOT_DIR = MkmConfig.getConfig("cache_root");
+
+	public static final String OUTPUT_DIR = MkmConfig.getConfig("output_dir");
 
 	public static final String lineSeperator = "\r\n";
 

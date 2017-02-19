@@ -34,6 +34,8 @@ public class MkmCacheBuilder
 
 	private int maxIterations;
 
+	private int latestIndex = 1;
+
 	private LogLevel systemLevel = LoggingHelper.SYSTEM_LEVEL;
 
 	public Set<Integer> blackList = new HashSet<>();
@@ -81,7 +83,8 @@ public class MkmCacheBuilder
 
 		int cacheHits = 0;
 		int count400 = 0;
-		for (int i = 1; i < CARD_MAX_ID && i < (maxIterations + cacheHits); i++)
+		int currentMaxIndex = latestIndex;
+		for (int i = latestIndex; i < CARD_MAX_ID && i < (maxIterations + cacheHits + currentMaxIndex); i++)
 		{
 			// skip blacklist entries
 			if (this.blackList.contains(i))
@@ -99,7 +102,7 @@ public class MkmCacheBuilder
 			if (MkmCache.getCacheContent(personalizedParams) != null)
 			{
 				// do one round more
-				LoggingHelper.logForLevel(LogLevel.Info, "cache hit for:", personalizedParams, ". Incrementing maxIterations.");
+				LoggingHelper.logForLevel(LogLevel.Detailed, "cache hit for:", personalizedParams, ". Incrementing maxIterations.");
 				cacheHits++;
 			}
 			else
@@ -129,6 +132,8 @@ public class MkmCacheBuilder
 					LoggingHelper.logException(LogLevel.Error, e, "Cannot write cache entry for: ", personalizedParams);
 				}
 			}
+
+			latestIndex = i;
 		}
 
 		LoggingHelper.logForLevel(systemLevel, "Number of 400 return codes: " + count400);
@@ -141,20 +146,6 @@ public class MkmCacheBuilder
 	public void addBlackListEntry(final Integer cardNumber)
 	{
 		this.blackList.add(cardNumber);
-
-		// String content;
-		// try
-		// {
-		// content = FileHelper.readFile(BLACKLIST_NAME);
-		// }
-		// catch (IOException e)
-		// {
-		// LoggingHelper.logException(LogLevel.Critical, e, "Unable to read Blacklist");
-		// return;
-		// }
-		// content += cardNumber + ";";
-		//
-		// FileHelper.writeToFile(BLACKLIST_NAME, content);
 
 		FileWriter writer = null;
 		try

@@ -1,24 +1,13 @@
-################## only before the first run ##################
+####### How to use configure this program ########
 
-1.1.) open install_cert.bat with a text editor
-	- replace the value of JAVA_ROOT (default C:/Program Files/Java/jre1.8.0_66) with your java installation folder.
-	 (replace all \ with / ). If have multiple java versions installed, juse the command java -version in the command line
-	 to show the used one
+When running the the start_inserter.bat file for the first time you will have to take some steps:
 
-1.2.) run install_cert,bat with ADMIN rights
+- when there is no mkmConnectorConfig.properties present the setup process will start, enter the values provided by the
+MagickartenMarkt Profile information, enter dummy values for the Sandbox values if you do not plan on using the MkmSandbox Server
+(pure testing Server for development purposes) and enter false at the config Use Sandbox
 
-1.3.) open mkmConnector.jar with a zip programm
-	- edit mkmConnector.properties with a text editor (inside the jar file)
-	- replace the first 4 entries with your mkm information (mkm_app_token, mkm_app_secret, mkm_access_token, mkm_access_token_secret)
+- the install_cert_modified.bat file will be rewritten to fit your java installation. After the mkmConnector has finished, 
+you need to run the install_cert_modified.bat with ADMIN rights in order to trust the certificate of MagicKartenMarkt. If you
+do not do this, this program will not be able to establish a secure connection and will not work.
 
-##################     do this for every run 	##################
-################## end of first install routine ##################
-
-2.1.) optional - only if you want to switch the user to get the data for:
-	- open mkmExport.jar with a zip programm
-	- edit mkmConnector.properties with a text editor (inside the jar file)
-	- replace the entry mkmUserToExtractCollectionFor (default set to MrTumor) with the mkmUserName you want to fetch the data for
-
-2.2.) 
-	-	run start_export.bat to start the program to export the configured users collection to a csv file
-	-	run start_inserter.bat to start posting your product to mkm
+You are now good to go

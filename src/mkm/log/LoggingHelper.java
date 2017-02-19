@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import mkm.config.MkmConfig;
 import mkm.connect.MkmConnector;
 import mkm.exception.Http400Exception;
 import mkm.file.FileHelper;
@@ -26,7 +27,7 @@ import mkm.parser.XmlParser;
 public class LoggingHelper
 {
 
-	public static LogLevel SYSTEM_LEVEL = LogLevel.getLevelForString(MkmConnector.mkm_config.getString("log.Log_Level"));
+	public static LogLevel SYSTEM_LEVEL = LogLevel.getLevelForString(MkmConfig.getConfig("log.Log_Level"));
 
 	public static boolean PREFIX_WITH_TIMESTAMP;
 
@@ -36,8 +37,8 @@ public class LoggingHelper
 
 	static
 	{
-		PREFIX_WITH_TIMESTAMP = Boolean.TRUE.toString().equals(MkmConnector.mkm_config.getString("log.prefix_with_timeStamp"));
-		String timeStampFormat = MkmConnector.mkm_config.getString("log.time_stamp_format");
+		PREFIX_WITH_TIMESTAMP = Boolean.TRUE.toString().equals(MkmConfig.getConfig("log.prefix_with_timeStamp"));
+		String timeStampFormat = MkmConfig.getConfig("log.time_stamp_format");
 
 		if (PREFIX_WITH_TIMESTAMP)
 		{

@@ -81,6 +81,9 @@ public class MkmConfig
 			String line;
 			while ((line = reader.readLine()) != null)
 			{
+				if (line.startsWith("#") || "".equals(line))
+					continue;
+
 				String key = line.substring(0, line.indexOf('='));
 				this.configEntries.put(key, line.substring(line.indexOf('=') + 1));
 			}

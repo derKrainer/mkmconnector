@@ -400,7 +400,7 @@ public class MkmInserterMain extends JPanel
 	 */
 	protected void startCacheBuilder()
 	{
-		int entriesToAdd = Integer.parseInt(MkmConnector.mkm_config.getString("cache_entries_to_add"));
+		int entriesToAdd = Integer.parseInt(MkmConfig.getConfig("cache_entries_to_add"));
 		new MkmCacheBuilder(this.inserter.getConnector(), entriesToAdd).buildCardCache(true);
 		JOptionPane.showMessageDialog(this, "Added " + entriesToAdd + " cache entries.", "Cache building finished", JOptionPane.INFORMATION_MESSAGE);
 	}

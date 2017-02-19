@@ -50,7 +50,7 @@ public class MkmCache
 		// better save than sorry
 		if (connector == null)
 		{
-			connector = new MkmConnector();
+			connector = MkmConnector.getInstance();
 		}
 
 		// build the cache key-base

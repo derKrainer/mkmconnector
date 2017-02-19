@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import mkm.cache.MkmLocalDatabaseCache;
+import mkm.config.MkmConfig;
 import mkm.connect.MkmConnector;
 import mkm.data.Article;
 import mkm.data.MtgCard;
@@ -30,9 +31,9 @@ import mkm.log.LoggingHelper;
 public class MkmInserter
 {
 
-	public static final boolean PERFORM_EXACT_SEARCH = Boolean.parseBoolean(MkmConnector.mkm_config.getString("searchForExactCardName"));
+	public static final boolean PERFORM_EXACT_SEARCH = Boolean.parseBoolean(MkmConfig.getConfig("searchForExactCardName"));
 
-	public static final String[] SEARCH_LANGUAGES = MkmConnector.mkm_config.getString("searchForLanguages").split(";");
+	public static final String[] SEARCH_LANGUAGES = MkmConfig.getConfig("searchForLanguages").split(";");
 
 	private MkmConnector connector;
 
